@@ -1,0 +1,19 @@
+import pandas as pd 
+import random
+from sklearn.preprocessing import OneHotEncoder
+ 
+lst = ['robot'] * 10
+lst += ['human'] * 10 
+random.shuffle(lst)
+data = pd.DataFrame({'whoAmI': lst})
+data.head()
+print(f'{data}\n')
+
+encoder = OneHotEncoder()
+encoder.fit(data[['whoAmI']])
+
+one_hot = encoder.transform(data[['whoAmI']])
+column = encoder.get_feature_names_out(['whoAmI'])
+
+one_hot_df = pd.DataFrame(one_hot.toarray(), columns=column)
+print(one_hot_df.head(20))
